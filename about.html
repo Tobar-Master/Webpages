@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryne Tobar</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap');
+
+    :root {
+      --c1: #ff6ec7;
+      --c2: #a78bfa;
+      --c3: #38bdf8;
+      --c4: #4ade80;
+      --c5: #fb923c;
+      --c6: #facc15;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #0d0d0d;
+      color: #f0f0f0;
+      overflow-x: hidden;
+    }
+
+    /* ── FUZZY HELPERS ── */
+    .fuzzy {
+      filter: blur(0.4px);
+      transition: filter 0.3s;
+    }
+    .fuzzy:hover { filter: blur(0px); }
+
+    /* rainbow text-shadow stack = "fuzzy" effect */
+    .fuzz-text {
+      text-shadow:
+        -2px -2px 6px var(--c1),
+         2px -2px 6px var(--c2),
+        -2px  2px 6px var(--c3),
+         2px  2px 6px var(--c4),
+         0px  0px 12px rgba(255,255,255,0.25);
+    }
+
+    .fuzz-text-sm {
+      text-shadow:
+        -1px -1px 4px var(--c5),
+         1px -1px 4px var(--c1),
+        -1px  1px 4px var(--c3),
+         1px  1px 4px var(--c2);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(255,110,199,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(56,189,248,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(167,139,250,0.12) 0%, transparent 70%),
+        #0d0d0d;
+    }
+
+    /* floating blobs */
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+    .hero::before {
+      width: 420px; height: 420px;
+      background: conic-gradient(var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c1));
+      top: -80px; left: -80px;
+    }
+    .hero::after {
+      width: 360px; height: 360px;
+      background: conic-gradient(var(--c3), var(--c6), var(--c5), var(--c1), var(--c2), var(--c3));
+      bottom: -60px; right: -60px;
+      animation-direction: alternate-reverse;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    .hero-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      line-height: 1;
+      background: linear-gradient(135deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+      background-size: 300% 300%;
+      filter: blur(0.6px);
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-sub span {
+      display: inline-block;
+      animation: wave 2s ease-in-out infinite;
+    }
+    .hero-sub span:nth-child(2) { animation-delay: 0.1s; color: var(--c1); }
+    .hero-sub span:nth-child(3) { animation-delay: 0.2s; }
+    .hero-sub span:nth-child(4) { animation-delay: 0.3s; color: var(--c3); }
+    .hero-sub span:nth-child(5) { animation-delay: 0.4s; }
+    .hero-sub span:nth-child(6) { animation-delay: 0.5s; color: var(--c4); }
+    .hero-sub span:nth-child(7) { animation-delay: 0.6s; }
+    .hero-sub span:nth-child(8) { animation-delay: 0.7s; color: var(--c5); }
+
+    @keyframes wave {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+      animation: fade-bob 2s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes fade-bob {
+      0%, 100% { opacity: 0.35; transform: translateY(0); }
+      50%       { opacity: 0.7;  transform: translateY(6px); }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+
+    .divider {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6));
+      border-radius: 9999px;
+      margin-bottom: 3rem;
+      filter: blur(0.5px);
+    }
+
+    /* ── ABOUT ── */
+    .about-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      backdrop-filter: blur(12px);
+      line-height: 1.85;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--c1), var(--c2), var(--c3), var(--c4));
+      opacity: 0.15;
+      z-index: -1;
+      filter: blur(8px);
+    }
+    .about-card p + p { margin-top: 1rem; }
+    .about-card strong {
+      background: linear-gradient(90deg, var(--c1), var(--c3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-pill {
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      cursor: default;
+      transition: transform 0.2s, filter 0.2s;
+      filter: blur(0.3px);
+      position: relative;
+    }
+    .skill-pill:hover {
+      transform: scale(1.1) rotate(-2deg);
+      filter: blur(0px);
+    }
+
+    .skill-pill:nth-child(6n+1)  { background: linear-gradient(135deg, var(--c1), var(--c2)); color: #fff; }
+    .skill-pill:nth-child(6n+2)  { background: linear-gradient(135deg, var(--c2), var(--c3)); color: #fff; }
+    .skill-pill:nth-child(6n+3)  { background: linear-gradient(135deg, var(--c3), var(--c4)); color: #fff; }
+    .skill-pill:nth-child(6n+4)  { background: linear-gradient(135deg, var(--c4), var(--c5)); color: #000; }
+    .skill-pill:nth-child(6n+5)  { background: linear-gradient(135deg, var(--c5), var(--c6)); color: #000; }
+    .skill-pill:nth-child(6n+6)  { background: linear-gradient(135deg, var(--c6), var(--c1)); color: #000; }
+
+    .skill-category {
+      width: 100%;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .skill-category:first-child { margin-top: 0; }
+
+    /* ── EXPERIENCE ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      border-radius: 9999px;
+      background: linear-gradient(180deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5));
+      filter: blur(0.5px);
+    }
+
+    .job {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .job::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: conic-gradient(var(--c1), var(--c3), var(--c5), var(--c1));
+      box-shadow: 0 0 12px var(--c2);
+      filter: blur(0.3px);
+    }
+
+    .job-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: #fff;
+    }
+
+    .job-company {
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--c3), var(--c2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .job-date {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.6rem;
+    }
+
+    .job-desc {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+    }
+
+    /* ── HOBBIES ── */
+    .hobbies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .hobby-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.25s, filter 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .hobby-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--c5), var(--c6), var(--c4));
+      opacity: 0.1;
+      z-index: -1;
+      filter: blur(6px);
+    }
+    .hobby-card:hover {
+      transform: translateY(-6px) rotate(1deg);
+      filter: blur(0px);
+    }
+    .hobby-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+    .hobby-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--c5), var(--c1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hobby-desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.2);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* scroll-reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1 class="hero-name fuzz-text">Ryne Tobar</h1>
+    <p class="hero-sub">
+      <span>T</span><span>e</span><span>c</span><span>h</span><span>&nbsp;</span><span>E</span><span>n</span><span>t</span><span>h</span><span>u</span><span>s</span><span>i</span><span>a</span><span>s</span><span>t</span>
+    </p>
+    <p class="scroll-hint">↓ scroll ↓</p>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2 class="section-title fuzz-text-sm reveal">About Me</h2>
+    <div class="divider reveal"></div>
+    <div class="about-card fuzzy reveal">
+      <p>
+        Hey, I'm <strong>Ryne Tobar</strong> — a tech enthusiast who loves learning new things and
+        tinkering with everything from spreadsheets to codebases. Currently working at
+        <strong>Master Electronics</strong>, where I keep things running and figure stuff out as I go.
+      </p>
+      <p>
+        When I'm not wrestling with Excel formulas or pushing code to Git, I'm probably poking at
+        something new just to see how it works. This page is proof — built from scratch,
+        intentionally fuzzy, and proudly multicolored.
+      </p>
+      <p>
+        I believe the best way to learn anything is to just start doing it. Every commit is a step
+        forward, even if it just says <strong>"this is my first comment."</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2 class="section-title fuzz-text-sm reveal">Skills</h2>
+    <div class="divider reveal"></div>
+    <div class="skills-grid reveal">
+      <div class="skill-category">Tools & Tech</div>
+      <span class="skill-pill fuzzy">Git</span>
+      <span class="skill-pill fuzzy">GitHub</span>
+      <span class="skill-pill fuzzy">Python</span>
+      <span class="skill-pill fuzzy">Excel / openpyxl</span>
+      <span class="skill-pill fuzzy">Node.js</span>
+      <span class="skill-pill fuzzy">HTML & CSS</span>
+
+      <div class="skill-category">Superpowers</div>
+      <span class="skill-pill fuzzy">Learning Fast</span>
+      <span class="skill-pill fuzzy">Problem Solving</span>
+      <span class="skill-pill fuzzy">Curiosity</span>
+      <span class="skill-pill fuzzy">Attention to Detail</span>
+      <span class="skill-pill fuzzy">Making Things Work</span>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <h2 class="section-title fuzz-text-sm reveal">Work Experience</h2>
+    <div class="divider reveal"></div>
+    <div class="timeline">
+      <div class="job reveal">
+        <div class="job-title">Tech Professional</div>
+        <div class="job-company">Master Electronics</div>
+        <div class="job-date">Present</div>
+        <div class="job-desc">
+          Working in the electronics industry, handling day-to-day tech challenges and
+          continuously leveling up skills in tooling, automation, and process improvement.
+        </div>
+      </div>
+      <div class="job reveal">
+        <div class="job-title">Lifelong Learner</div>
+        <div class="job-company">Self-Directed</div>
+        <div class="job-date">Always</div>
+        <div class="job-desc">
+          Built personal projects, learned Git from scratch, generated Excel workbooks with Python,
+          and now apparently builds fuzzy, multicolored webpages on command. Continuous improvement
+          is the goal — every day a little better than the last.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOBBIES -->
+  <section id="hobbies">
+    <h2 class="section-title fuzz-text-sm reveal">Hobbies & Interests</h2>
+    <div class="divider reveal"></div>
+    <div class="hobbies-grid reveal">
+      <div class="hobby-card fuzzy">
+        <div class="hobby-icon">🍳</div>
+        <div class="hobby-label">Cooking Dinner</div>
+        <div class="hobby-desc">Experimenting in the kitchen and turning ingredients into something worth eating.</div>
+      </div>
+      <div class="hobby-card fuzzy">
+        <div class="hobby-icon">🐕</div>
+        <div class="hobby-label">Walking the Dog</div>
+        <div class="hobby-desc">Daily outdoor adventures with the pup — fresh air, good vibes, happy dog.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Made with chaos &amp; color · Ryne Tobar · 2026
+  </footer>
+
+  <script>
+    // scroll-reveal
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
