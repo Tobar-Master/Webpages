@@ -1,2 +1,7 @@
 this is a test of the git init
 This is a change
+
+
+git config --global user.email "ryne.tobar@masterelectronics.com"
+  git config --global user.name "Tobar-Master"
+  Add some more text
